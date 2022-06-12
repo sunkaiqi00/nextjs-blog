@@ -6,6 +6,8 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import http from 'api/http';
 import { ironOption } from 'config'
 import { IronSession } from 'iron-session';
+
+
 export default withIronSessionApiRoute(sendVerifyCode, ironOption)
 
 type IronSessionProps = IronSession & {
@@ -55,23 +57,24 @@ async function sendVerifyCode(
       }
     }
   )
+  console.log(response);
 
   // 类型待完善
   const { statusCode, statusMsg, templateSMS } = response as any;
   if (statusCode === '000000') {
     // 本地存储验证码
-    session.verifyCode = verifyCode;
-    await session.save()
+    // session.verifyCode = verifyCode;
+    // await session.save();
     res.status(200).json({
       code: 0,
-      message: '验证码获取成功',
+      msg: '验证码获取成功',
       data: { templateSMS }
-    })
+    });
   } else {
     res.status(200).json({
       code: statusCode,
-      message: statusMsg
-    })
+      msg: statusMsg
+    });
   }
 
 }

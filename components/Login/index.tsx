@@ -10,10 +10,15 @@ interface LoginProps {
   onClose: () => void;
 }
 
+interface FormProps {
+  phone: string;
+  verifyCode: string;
+}
+
 const Login: FC<LoginProps> = ({ visible, onClose }) => {
   // 表单值
-  const [form, setForm] = useState({
-    userphone: '',
+  const [form, setForm] = useState<FormProps>({
+    phone: '',
     verifyCode: ''
   });
   // 是否显示获取验证码倒计时
@@ -28,15 +33,15 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
 
   // 获取手机验证码
   const getVerifyCode = () => {
-    const { userphone } = form;
-    if (!userphone) {
+    const { phone } = form;
+    if (!phone) {
       message.warning('请输入手机号！');
       return;
     }
 
     http
       .post('/api/user/sendVerifyCode', {
-        to: userphone,
+        to: phone,
         templateId: 1
       })
       .then((res: any) => {
@@ -44,7 +49,7 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
           message.info('验证码发送成功');
           setIsShowverifyCode(true);
         } else {
-          message.error(res.message || '验证码获取错误');
+          message.error(res.msg || '验证码获取错误');
         }
       })
       .catch(error => {
@@ -52,21 +57,34 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
       });
   };
   const getVerifyCodeEnd = () => {
-    console.log(111);
-
     setIsShowverifyCode(false);
+  };
+  // 登录
+  const handleSubmit = (values: FormProps) => {
+    console.log(values);
+    http
+      .post('/api/user/login', {
+        ...values
+      })
+      .then((res: any) => {
+        if (res.code === 0) {
+          onClose && onClose();
+        } else {
+          message.error(res.msg || '登陆失败，请稍后再试!');
+        }
+      });
   };
   return (
     <Modal visible={visible} title="手机号登录" footer={null}>
-      <Form>
+      <Form onFinish={values => handleSubmit(values)}>
         <Form.Item
-          name="userphone"
+          name="phone"
           rules={[{ required: true, message: '请输入手机号!' }]}
         >
           <Input
-            value={form.userphone}
+            value={form.phone}
             placeholder="请输入手机号"
-            onInput={e => updateForm('userphone', e)}
+            onInput={e => updateForm('phone', e)}
           />
         </Form.Item>
         <Form.Item
