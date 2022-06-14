@@ -64,7 +64,8 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
     console.log(values);
     http
       .post('/api/user/login', {
-        ...values
+        ...values,
+        identity_type: 'phone'
       })
       .then((res: any) => {
         if (res.code === 0) {

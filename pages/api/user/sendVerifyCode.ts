@@ -10,8 +10,11 @@ import { IronSession } from 'iron-session';
 
 export default withIronSessionApiRoute(sendVerifyCode, ironOption)
 
-type IronSessionProps = IronSession & {
-  verifyCode: number
+export type IronSessionProps = IronSession & {
+  verifyCode: string;
+  userId: number,
+  nickname: string;
+  avatar: string
 }
 
 async function sendVerifyCode(
@@ -35,7 +38,7 @@ async function sendVerifyCode(
   const AppId = '8aaf070881368efb018156b6329d0993';
 
   // 验证码
-  const verifyCode = Math.floor(Math.random() * (9999 - 1000)) + 1000;
+  const verifyCode = Math.floor(Math.random() * (9999 - 1000)) + 1000 + '';
   // 过期时间
   const expireMinute = '5'
 
@@ -63,8 +66,8 @@ async function sendVerifyCode(
   const { statusCode, statusMsg, templateSMS } = response as any;
   if (statusCode === '000000') {
     // 本地存储验证码
-    // session.verifyCode = verifyCode;
-    // await session.save();
+    session.verifyCode = verifyCode;
+    await session.save();
     res.status(200).json({
       code: 0,
       msg: '验证码获取成功',
