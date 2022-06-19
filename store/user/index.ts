@@ -1,7 +1,7 @@
 export type IUserInfo = {
-  userId: number | null;
-  nickname: string | null;
-  avatar: string | null;
+  userId: number | string;
+  nickname: string;
+  avatar: string;
 };
 
 export interface IUserStore {
@@ -12,9 +12,9 @@ export interface IUserStore {
 const userStore = (): IUserStore => {
   return {
     userInfo: {
-      userId: null,
-      nickname: null,
-      avatar: null
+      userId: '',
+      nickname: '',
+      avatar: ''
     },
     setUserInfo(user) {
       this.userInfo = user;

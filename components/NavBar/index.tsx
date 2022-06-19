@@ -1,5 +1,14 @@
-import Link from 'next/link';
-import { Button, Row, Col, Menu, Dropdown, Avatar, Typography } from 'antd';
+import { observer } from 'mobx-react-lite';
+import {
+  Button,
+  Row,
+  Col,
+  Menu,
+  Dropdown,
+  Avatar,
+  Typography,
+  message
+} from 'antd';
 import { HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import navs from './config';
 import styles from './index.module.scss';
@@ -7,9 +16,13 @@ import Logo from 'components/Logo';
 import Login from 'components/Login';
 import { useState } from 'react';
 import { useStore } from 'context/StoreContext';
+import { MenuInfo } from 'rc-menu/lib/interface';
+import http from 'api/http';
 
 const NavBar = () => {
   const store = useStore();
+  // console.log(store);
+
   const { userId, nickname, avatar } = store.user.userInfo;
 
   const [isShowLogin, setIsShowLogin] = useState(false);
@@ -22,15 +35,27 @@ const NavBar = () => {
   const closeloginModal = () => {
     setIsShowLogin(false);
   };
-
+  const dropDownClick = ({ key }: MenuInfo) => {
+    if (key === '/logout') {
+      handleLogout();
+    }
+  };
+  const handleLogout = () => {
+    http.get('/api/user/logout').then(res => {
+      if (res.code === 0) {
+        message.success(res.msg);
+        store.user.setUserInfo({});
+      }
+    });
+  };
   const renderDropDownMenu = () => {
     return (
-      <Menu>
-        <Menu.Item>
+      <Menu onClick={data => dropDownClick(data)}>
+        <Menu.Item key="/profile">
           <HomeOutlined />
           &nbsp; 个人主页
         </Menu.Item>
-        <Menu.Item>
+        <Menu.Item key="/logout">
           <LogoutOutlined />
           &nbsp; 退出登录
         </Menu.Item>
@@ -55,7 +80,7 @@ const NavBar = () => {
         </Col>
         <Col span={5}>
           <Button>写文章</Button>
-          {userId != null ? (
+          {userId ? (
             <Dropdown overlay={renderDropDownMenu()}>
               {/* <div> */}
               <Avatar src={avatar} />
@@ -74,4 +99,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default observer(NavBar);

@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import { Button, Form, Input, Modal } from 'antd';
 import CountDown from 'components/CountDown';
 import { FC, useState, FormEvent } from 'react';
@@ -72,6 +73,8 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
       .then((res: any) => {
         if (res.code === 0) {
           onClose && onClose();
+          console.log(res.data);
+
           store.user.setUserInfo(res?.data);
         } else {
           message.error(res.msg || '登陆失败，请稍后再试!');
@@ -128,4 +131,4 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
   );
 };
 
-export default Login;
+export default observer(Login);

@@ -8,11 +8,13 @@ export interface IProps {
 }
 
 // ssr
-enableStaticRendering(true);
+enableStaticRendering(!typeof window);
 
 const StoreContext = createContext({});
 
 const StoreProvider: FC<IProps> = ({ initialValue, children }) => {
+  // console.log(initialValue);
+
   const store = useLocalObservable(createStore(initialValue));
   return (
     <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
