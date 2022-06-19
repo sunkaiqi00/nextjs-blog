@@ -5,7 +5,7 @@ import { perpareConection } from 'db';
 import { User, UserAuth } from 'db/entity';
 import { IronSessionProps } from './sendVerifyCode';
 
-export default withIronSessionApiRoute(login, ironOption)
+export default withIronSessionApiRoute(login, ironOption);
 
 async function login(req: NextApiRequest, res: NextApiResponse) {
   const { phone = '', verifyCode = '', identity_type = 'phone' } = req.body;
@@ -43,32 +43,33 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
           nickname,
           avatar
         }
-      })
+      });
     } else {
       // 新用户 自动注册
       const user = User.create({
         nickname: `user_${phone}`,
         avatar: '/images/avatar.png',
-        job: '暂无',
-        introduce: '暂无',
+        job: '',
+        introduce: ''
       });
 
       const userAuth = UserAuth.create({
         identifier: phone,
         identity_type: identity_type,
         credential: session.verifyCode,
-        user: user,
+        user: user
       });
 
       // const userRes = await userRepo.save(user);
       // console.log('userRes: ', userRes);
 
-
       // 保存user_auths 自动保存users
       const userAuthRes = await userAuthRepo.save(userAuth);
       console.log('userAuthRes: ', userAuthRes);
 
-      const { user: { id, nickname, avatar } } = userAuthRes;
+      const {
+        user: { id, nickname, avatar }
+      } = userAuthRes;
       session.userId = id;
       session.nickname = nickname;
       session.avatar = avatar;
@@ -82,15 +83,14 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
           nickname,
           avatar
         }
-      })
+      });
     }
   } else {
     res.status(200).json({
       msg: '验证码错误',
-      code: 0,
-    })
+      code: 0
+    });
   }
-
 
   // console.log('phone: ', phone);
   // console.log('verifyCode: ', verifyCode);

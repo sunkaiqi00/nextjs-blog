@@ -3,6 +3,8 @@ import CountDown from 'components/CountDown';
 import { FC, useState, FormEvent } from 'react';
 import { message } from 'antd';
 
+import { useStore } from 'context/StoreContext';
+
 import http from 'api/http';
 
 interface LoginProps {
@@ -16,6 +18,7 @@ interface FormProps {
 }
 
 const Login: FC<LoginProps> = ({ visible, onClose }) => {
+  const store = useStore();
   // 表单值
   const [form, setForm] = useState<FormProps>({
     phone: '',
@@ -61,7 +64,6 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
   };
   // 登录
   const handleSubmit = (values: FormProps) => {
-    console.log(values);
     http
       .post('/api/user/login', {
         ...values,
@@ -70,13 +72,22 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
       .then((res: any) => {
         if (res.code === 0) {
           onClose && onClose();
+          store.user.setUserInfo(res?.data);
         } else {
           message.error(res.msg || '登陆失败，请稍后再试!');
         }
       });
   };
+  const closeModel = () => {
+    onClose && onClose();
+  };
   return (
-    <Modal visible={visible} title="手机号登录" footer={null}>
+    <Modal
+      visible={visible}
+      title="手机号登录"
+      footer={null}
+      onCancel={() => closeModel()}
+    >
       <Form onFinish={values => handleSubmit(values)}>
         <Form.Item
           name="phone"
@@ -112,6 +123,7 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
         </Form.Item>
       </Form>
       <a>使用Github登录</a>
+      <hr />
     </Modal>
   );
 };
