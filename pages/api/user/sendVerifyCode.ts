@@ -1,26 +1,22 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import { format } from 'date-fns'
+import { NextApiRequest, NextApiResponse } from 'next';
+import { format } from 'date-fns';
 import md5 from 'md5';
-import { encode } from 'js-base64'
-import { withIronSessionApiRoute } from 'iron-session/next'
+import { encode } from 'js-base64';
+import { withIronSessionApiRoute } from 'iron-session/next';
 import http from 'api/http';
-import { ironOption } from 'config'
+import { ironOption } from 'config';
 import { IronSession } from 'iron-session';
 
-
-export default withIronSessionApiRoute(sendVerifyCode, ironOption)
+export default withIronSessionApiRoute(sendVerifyCode, ironOption);
 
 export type IronSessionProps = IronSession & {
   verifyCode: string;
-  userId: number,
+  userId: number;
   nickname: string;
-  avatar: string
-}
+  avatar: string;
+};
 
-async function sendVerifyCode(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
   const { to = '', templateId = 1 } = req.body;
   // session 存储
   const session = req.session as IronSessionProps;
@@ -31,36 +27,38 @@ async function sendVerifyCode(
   // 时间戳
   const timeStamp = format(new Date(), 'yyyyMMddHHmmss');
 
-  // 
+  //
   const SigParameter = md5(`${AccountId}${AuthToken}${timeStamp}`);
-  const Authorization = encode(`${AccountId}:${timeStamp}`)
+  const Authorization = encode(`${AccountId}:${timeStamp}`);
 
   const AppId = '8aaf070881368efb018156b6329d0993';
 
   // 验证码
   const verifyCode = Math.floor(Math.random() * (9999 - 1000)) + 1000 + '';
   // 过期时间
-  const expireMinute = '5'
+  const expireMinute = '5';
 
-  console.log(timeStamp);
-  console.log(SigParameter);
-  console.log(Authorization);
+  // console.log(timeStamp);
+  // console.log(SigParameter);
+  // console.log(Authorization);
 
-  const url = `https://app.cloopen.com:8883/2013-12-26/Accounts/${AccountId}/SMS/TemplateSMS?sig=${SigParameter}`
+  const url = `https://app.cloopen.com:8883/2013-12-26/Accounts/${AccountId}/SMS/TemplateSMS?sig=${SigParameter}`;
 
-  const response = await http.post(url, {
-    to,
-    templateId,
-    appId: AppId,
-    datas: [verifyCode, expireMinute]
-  },
+  const response = await http.post(
+    url,
+    {
+      to,
+      templateId,
+      appId: AppId,
+      datas: [verifyCode, expireMinute]
+    },
     {
       headers: {
         Authorization
       }
     }
-  )
-  console.log(response);
+  );
+  // console.log(response);
 
   // 类型待完善
   const { statusCode, statusMsg, templateSMS } = response as any;
@@ -79,5 +77,4 @@ async function sendVerifyCode(
       msg: statusMsg
     });
   }
-
 }

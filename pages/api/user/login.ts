@@ -66,7 +66,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
         identifier: phone,
         identity_type: identity_type,
         credential: session.verifyCode,
-        user: user
+        user
       });
 
       // const userRes = await userRepo.save(user);

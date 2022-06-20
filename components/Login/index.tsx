@@ -3,10 +3,9 @@ import { Button, Form, Input, Modal } from 'antd';
 import CountDown from 'components/CountDown';
 import { FC, useState, FormEvent } from 'react';
 import { message } from 'antd';
-
 import { useStore } from 'context/StoreContext';
-
 import http from 'api/http';
+import { githubClientId, githubCallbackUrl } from 'config/oauth';
 
 interface LoginProps {
   visible: boolean;
@@ -84,6 +83,14 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
   const closeModel = () => {
     onClose && onClose();
   };
+  // github 登录
+
+  const githubLogin = () => {
+    // const client_id = '0773b46c0262477b1a05';
+    // const redirect_uri = '16bd3fa8d30f4ca50575eed69bc68ddb8d47896d';
+    const url = `https://github.com/login/oauth/authorize?client_id=${githubClientId}&redirect_uri=${githubCallbackUrl}`;
+    window.open(url);
+  };
   return (
     <Modal
       visible={visible}
@@ -125,7 +132,7 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
           </Button>
         </Form.Item>
       </Form>
-      <a>使用Github登录</a>
+      <div onClick={() => githubLogin()}>使用Github登录</div>
       <hr />
     </Modal>
   );
