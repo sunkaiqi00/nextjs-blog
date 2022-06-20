@@ -1,24 +1,21 @@
-.navbar{
-  // display: flex;
-  // background-color: antiquewhite;
-  // justify-content: center;
-  // align-items: center;
-  .logoArea{
-    // width: 250px;
-    // display: flex;
-    // align-items: center;
-    height: 100%;
-  }
-  // .linkArea{
-  //   flex: 1;
-  // }
-  // .loginArea{
-  //   width: 250px;
-  // }
+.logoArea{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
-
-.flexAlignColCenter{
+.navArea{
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.btnArea{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.writeBtn{
+  margin-right: 12px;
 }

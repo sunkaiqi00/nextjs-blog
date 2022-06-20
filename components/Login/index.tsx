@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Button, Form, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal, Typography } from 'antd';
 import CountDown from 'components/CountDown';
 import { FC, useState, FormEvent } from 'react';
 import { message } from 'antd';
@@ -132,8 +132,9 @@ const Login: FC<LoginProps> = ({ visible, onClose }) => {
           </Button>
         </Form.Item>
       </Form>
-      <div onClick={() => githubLogin()}>使用Github登录</div>
-      <hr />
+      <Typography.Link onClick={() => githubLogin()}>
+        使用Github登录
+      </Typography.Link>
     </Modal>
   );
 };
