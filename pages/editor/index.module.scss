@@ -1,0 +1,13 @@
+.newEditor{
+  display: flex;
+  flex-direction: column;
+  padding: 0 350px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.editorHead{
+  padding: 10px 0;
+  display: flex;
+  gap: 20px;
+}

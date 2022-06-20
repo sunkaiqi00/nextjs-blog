@@ -3,18 +3,30 @@ import type { AppProps } from 'next/app';
 import Layout from 'components/Layout';
 import StoreProvider from 'context/StoreContext';
 import { IStore } from 'store';
+import { NextComponentType } from 'next';
 
 export type IApp = {
   initialValue: IStore;
+  Component: NextComponentType & {
+    layout?: boolean;
+  };
 } & AppProps;
 
 function MyApp({ Component, pageProps, initialValue }: IApp) {
+  const {} = Component;
+  const renderLayout = () => {
+    if (Component.layout === false) {
+      return <Component {...pageProps} />;
+    } else {
+      return (
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      );
+    }
+  };
   return (
-    <StoreProvider initialValue={initialValue}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </StoreProvider>
+    <StoreProvider initialValue={initialValue}>{renderLayout()}</StoreProvider>
   );
 }
 
