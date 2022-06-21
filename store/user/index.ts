@@ -1,8 +1,4 @@
-export type IUserInfo = {
-  userId: number | string;
-  nickname: string;
-  avatar: string;
-};
+import { IUserInfo } from 'types';
 
 export interface IUserStore {
   userInfo: IUserInfo;

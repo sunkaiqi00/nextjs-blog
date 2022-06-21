@@ -1,10 +1,4 @@
-// export interface ICookie {
-//   userId: number;
-//   nickname: string;
-//   avatar: string;
-// }
-
-import { IUserInfo } from 'store/user';
+import { IUserInfo } from 'types';
 
 export const setCookie = (
   cookies: any,

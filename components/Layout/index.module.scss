@@ -1,5 +1,12 @@
-.layoutHeader{
-  background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
-  padding: 0 350px;
+.layoutContainer{
+
+  .layoutHeader{
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+    padding: 0 400px;
+  }
+  .layoutContent{
+    padding: 16px 350px;
+    // background-color: #fff;
+  }
 }

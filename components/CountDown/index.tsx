@@ -4,6 +4,7 @@ interface CountDownProps {
   seconds?: number;
   onEnd: (time: number) => void;
 }
+
 const CountDown: FC<CountDownProps> = ({ seconds, onEnd }) => {
   const [time, setTime] = useState(seconds || 60);
 
