@@ -5,14 +5,14 @@ import { ironOption } from 'config';
 import { perpareConection } from 'db';
 import { User, UserAuth } from 'db/entity';
 import { setCookie } from 'utils';
-import { IronSessionProps } from '../user/sendVerifyCode';
+import { ISession } from '../user/sendVerifyCode';
 import { githubClientId, githubClientSecret } from 'config/oauth';
 import http from 'api/http';
 
 export default withIronSessionApiRoute(redirect, ironOption);
 
 async function redirect(req: NextApiRequest, res: NextApiResponse) {
-  const session = req.session as IronSessionProps;
+  const session = req.session as ISession;
   const cookies = Cookie.fromApiRoute(req, res);
 
   // http:localhost:3000/api/oauth/redirect?code=xxx

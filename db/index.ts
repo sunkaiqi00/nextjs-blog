@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Connection, getConnection, createConnection } from 'typeorm';
-import { User, UserAuth } from './entity'
+import { User, UserAuth, Article } from './entity';
 
 const type = process.env.DATEBASE_TYPE;
 const host = process.env.DATABASE_HOST;
@@ -16,9 +16,9 @@ export const perpareConection = () => {
     connectionRedayPromise = (async () => {
       try {
         const staleConnection = getConnection();
-        await staleConnection.close()
+        await staleConnection.close();
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
 
       const connection = await createConnection({
@@ -28,12 +28,12 @@ export const perpareConection = () => {
         username,
         password,
         database,
-        entities: { User, UserAuth },
+        entities: { User, UserAuth, Article },
         synchronize: false,
         logging: true
       });
       return connection;
-    })()
+    })();
   }
   return connectionRedayPromise;
-}
+};

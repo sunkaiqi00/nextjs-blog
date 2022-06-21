@@ -4,14 +4,14 @@ import { Cookie } from 'next-cookie';
 import { ironOption } from 'config';
 import { perpareConection } from 'db';
 import { User, UserAuth } from 'db/entity';
-import { IronSessionProps } from './sendVerifyCode';
+import { ISession } from './sendVerifyCode';
 import { setCookie } from 'utils';
 
 export default withIronSessionApiRoute(login, ironOption);
 
 async function login(req: NextApiRequest, res: NextApiResponse) {
   const { phone = '', verifyCode = '', identity_type = 'phone' } = req.body;
-  const session = req.session as IronSessionProps;
+  const session = req.session as ISession;
   const db = await perpareConection();
   const userAuthRepo = db.getRepository(UserAuth);
   const userRepo = db.getRepository(User);

@@ -9,7 +9,7 @@ import { IronSession } from 'iron-session';
 
 export default withIronSessionApiRoute(sendVerifyCode, ironOption);
 
-export type IronSessionProps = IronSession & {
+export type ISession = IronSession & {
   verifyCode: string;
   userId: number;
   nickname: string;
@@ -19,7 +19,7 @@ export type IronSessionProps = IronSession & {
 async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
   const { to = '', templateId = 1 } = req.body;
   // session 存储
-  const session = req.session as IronSessionProps;
+  const session = req.session as ISession;
   // 主账户ID
   const AccountId = '8aaf070881368efb018156b63181098c';
   // 账户授权令牌
