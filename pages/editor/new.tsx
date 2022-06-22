@@ -41,7 +41,7 @@ const NewEditor: LayoutNextPage = () => {
         title,
         content
       })
-      .then(res => {
+      .then((res: any) => {
         if (res.code === 0) {
           message.success(res?.msg || '发布成功');
           router.push(`/user/${userId}`);

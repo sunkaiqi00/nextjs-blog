@@ -2,8 +2,9 @@ import { Avatar, Card } from 'antd';
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
 import { EyeOutlined } from '@ant-design/icons';
-import { IArticle } from 'types';
+import { markdownToTxt } from 'markdown-to-txt';
 
+import { IArticle } from 'types';
 import styles from './index.module.scss';
 import { useRouter } from 'next/router';
 
@@ -20,7 +21,7 @@ const Articlelist = (props: IArticleList) => {
   };
 
   const handleViewArticle = (item: IArticle) => {
-    router.push(`/article/detail/${item.id}`);
+    router.push(`/article/${item.id}`); ///detail
   };
   return (
     <ul className={styles.articleContainer}>
@@ -47,7 +48,7 @@ const Articlelist = (props: IArticleList) => {
                 <div className={styles.contentMeta}>
                   <div className={styles.articleContentTitle}>{item.title}</div>
                   <div className={styles.articleContentText}>
-                    {item.content}
+                    {markdownToTxt(item.content)}
                   </div>
                 </div>
                 <ul className={styles.articleAction}>
