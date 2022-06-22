@@ -4,47 +4,86 @@ import { formatDistanceToNow } from 'date-fns';
 import { EyeOutlined } from '@ant-design/icons';
 import { IArticle } from 'types';
 
+import styles from './index.module.scss';
+import { useRouter } from 'next/router';
+
 interface IArticleList {
   articles: IArticle[];
 }
 
 const Articlelist = (props: IArticleList) => {
   const { articles } = props;
-  console.log(articles);
-  const renderAvatar = (article: IArticle) => {
-    const {
-      update_time,
-      user: { avatar }
-    } = article;
-    return (
-      <div>
-        <span>{formatDistanceToNow(new Date(update_time))}</span>
-        <Link href={'/'}>
-          <Avatar src={avatar} />
-        </Link>
-      </div>
-    );
+  const router = useRouter();
+
+  const handlViewUser = (item: IArticle) => {
+    router.push(`/user/${item.user.id}`);
   };
 
+  const handleViewArticle = (item: IArticle) => {
+    router.push(`/article/detail/${item.id}`);
+  };
   return (
-    <>
+    <ul className={styles.articleContainer}>
       {articles?.map(item => {
         return (
-          <Card
+          <li
+            className={styles.articleItem}
             key={item.id}
-            title={item.user.nickname}
-            extra={renderAvatar(item)}
+            onClick={() => handleViewArticle(item)}
           >
-            <h3>{item.title}</h3>
-            <p>{item.content}</p>
-            <div>
-              <EyeOutlined />
-              <span>{item.views}</span>
+            <div className={styles.articleHead}>
+              <div
+                className={styles.userNickname}
+                onClick={() => handlViewUser(item)}
+              >
+                {item.user.nickname}
+              </div>
+              <div className={styles.dividing}>|</div>
+              <div>{formatDistanceToNow(new Date(item.update_time))}</div>
             </div>
-          </Card>
+
+            <div className={styles.articleContent}>
+              <div className={styles.contentMain}>
+                <div className={styles.contentMeta}>
+                  <div className={styles.articleContentTitle}>{item.title}</div>
+                  <div className={styles.articleContentText}>
+                    {item.content}
+                  </div>
+                </div>
+                <ul className={styles.articleAction}>
+                  <li className={styles.view}>
+                    <EyeOutlined />
+                    <span>{item.views}</span>
+                  </li>
+                  <li className={styles.like}>
+                    <EyeOutlined />
+                    <span>{item.views}</span>
+                  </li>
+                  <li className={styles.comment}>
+                    <EyeOutlined />
+                    <span>{item.views}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className={styles.articleCover}>
+                <img src="/images/article-img.webp" />
+              </div>
+            </div>
+          </li>
         );
+        // return (
+        // <Card key={item.id} title={renderTitle(item)}>
+        //   <h3>{item.title}</h3>
+        //   <p>{item.content}</p>
+        //   <div>
+        //     <EyeOutlined />
+        //     <span>{item.views}</span>
+        //   </div>
+        // </Card>
+        // );
       })}
-    </>
+    </ul>
   );
 };
 

@@ -1,12 +1,18 @@
-.layoutContainer{
+.layoutContainer {
 
-  .layoutHeader{
+  background-color: #f4f5f5;
+
+  .layoutHeader {
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
-    padding: 0 400px;
+    // padding: 0 400px;
   }
-  .layoutContent{
-    padding: 16px 350px;
-    // background-color: #fff;
+
+  .layoutContent {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 960px;
   }
+
 }

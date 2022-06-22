@@ -10,5 +10,7 @@ export interface IArticle {
   content: string;
   update_time: string;
   views: number;
-  user: IUserInfo;
+  user: IUserInfo & {
+    id: number;
+  };
 }

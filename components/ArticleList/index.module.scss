@@ -1,0 +1,109 @@
+.articleContainer {
+  background-color: #fff;
+
+  .articleItem {
+    position: relative;
+    cursor: pointer;
+    margin-top: 10px;
+    padding: 12px 20px 0;
+    border-bottom: 1px solid rgba(228, 230, 235, 0.5);
+
+    .articleHead {
+      display: flex;
+      align-items: center;
+
+      .userNickname {
+        max-width: 162px;
+        font-size: 13px;
+        line-height: 22px;
+        color: #4e5969;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        transition: color .2s;
+
+        &:hover {
+          color: #007fff;
+        }
+      }
+
+      .dividing {
+        color: #e5e6eb;
+        margin: 0 8px;
+      }
+    }
+
+    .articleContent {
+      display: flex;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e5e6eb;
+      margin-top: 10px;
+      width: 100%;
+
+      .contentMain {
+        flex: 1 1 auto;
+        overflow: hidden;
+
+        .articleContentTitle {
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 24px;
+          color: #1d2129;
+          width: 100%;
+          margin-bottom: 8px;
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+        }
+
+        .articleContentText {
+          color: #86909c;
+          font-size: 13px;
+          line-height: 22px;
+          margin-bottom: 10px;
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+        }
+
+        .articleAction {
+          display: flex;
+          align-items: center;
+
+          .view,
+          .like,
+          .comment {
+            position: relative;
+            margin-right: 20px;
+            font-size: 13px;
+            line-height: 20px;
+            color: #4e5969;
+            flex-shrink: 0;
+
+            span:last-child {
+              margin-left: 4px;
+            }
+          }
+        }
+      }
+
+      .articleCover {
+        flex: 0 0 auto;
+        width: 120px;
+        height: 80px;
+        margin-left: 24px;
+        background-color: #fff;
+        border-radius: 2px;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
