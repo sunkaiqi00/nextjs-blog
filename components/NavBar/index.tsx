@@ -30,6 +30,8 @@ const NavBar = () => {
   // 跳转导航
   const switchNav = data => {
     console.log(data);
+    let { key } = data;
+    push(key);
   };
 
   // 写文章

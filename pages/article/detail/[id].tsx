@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 import { format } from 'date-fns';
 import Image from 'next/image';
 
-interface Iprops {
+export interface Iprops {
   params: {
     id: number;
   };
@@ -35,12 +35,12 @@ export async function getStaticProps(regs: Iprops) {
 
   // 文章阅读次数增加
   if (article) {
-    const articleRepo = db.getRepository(Article);
+    const articleRepo = await db.getRepository(Article);
     article.views += 1;
     articleRepo.save(article);
   }
 
-  console.log('article:', article);
+  // console.log('article:', article);
 
   return {
     props: {
@@ -85,6 +85,7 @@ const ArticleDetail = (props: { article: IArticle }) => {
             <span className={styles.viewsCount}>
               &nbsp;·&nbsp;&nbsp;阅读 {views}
             </span>
+            <Link href={`/editor/edit/${article.id}`}>编辑</Link>
           </div>
         </div>
       </div>

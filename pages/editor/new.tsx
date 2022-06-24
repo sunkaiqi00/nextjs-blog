@@ -24,7 +24,7 @@ const NewEditor: LayoutNextPage = () => {
   const router = useRouter();
 
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('**Hello world!!!**');
+  const [content, setContent] = useState('');
 
   const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;

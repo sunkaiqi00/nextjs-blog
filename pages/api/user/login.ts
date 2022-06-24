@@ -13,8 +13,8 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
   const { phone = '', verifyCode = '', identity_type = 'phone' } = req.body;
   const session = req.session as ISession;
   const db = await perpareConection();
-  const userAuthRepo = db.getRepository(UserAuth);
-  const userRepo = db.getRepository(User);
+  const userAuthRepo = await db.getRepository(UserAuth);
+  const userRepo = await db.getRepository(User);
 
   const cookies = Cookie.fromApiRoute(req, res);
   // console.log(verifyCode, session.verifyCode);

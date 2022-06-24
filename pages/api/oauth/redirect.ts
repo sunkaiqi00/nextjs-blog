@@ -44,7 +44,7 @@ async function redirect(req: NextApiRequest, res: NextApiResponse) {
   console.log('githubUserInfo: ', githubUserInfo);
 
   const db = await perpareConection();
-  const userAuthRepo = db.getRepository(UserAuth);
+  const userAuthRepo = await db.getRepository(UserAuth);
 
   const userAuth = await userAuthRepo.findOne({
     where: { identity_type: 'github', credential: githubClientId },

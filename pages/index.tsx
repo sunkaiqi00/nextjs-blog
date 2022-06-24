@@ -24,7 +24,7 @@ export async function getStaticProps() {
 
 const Home: NextPage<IHomePeops> = props => {
   const { articles } = props;
-  console.log(articles);
+  // console.log(articles);
 
   return (
     <div>
