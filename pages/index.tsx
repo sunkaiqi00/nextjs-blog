@@ -27,7 +27,7 @@ const Home: NextPage<IHomePeops> = props => {
   // console.log(articles);
 
   return (
-    <div>
+    <div className="container">
       <Articlelist articles={articles} />
     </div>
   );

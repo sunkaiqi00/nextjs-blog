@@ -5,13 +5,13 @@ import dynamic from 'next/dynamic';
 import { Iprops } from 'pages/article/detail/[id]';
 import { ChangeEvent, useState } from 'react';
 import { IArticle } from 'types';
-
+import { useRouter } from 'next/router';
+import http from 'api/http';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
-
 import styles from '../index.module.scss';
-import http from 'api/http';
-import { useRouter } from 'next/router';
+
+import { LayoutNextPage } from '../new';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
@@ -46,8 +46,8 @@ export async function getStaticProps(regs: Iprops) {
   };
 }
 
-const ArticleEdit = (props: { article: IArticle }) => {
-  const { article } = props;
+const ArticleEdit: LayoutNextPage = props => {
+  const { article } = props as { article: IArticle };
   // console.log('article: ', article);
   const router = useRouter();
   // console.log(router);
@@ -98,5 +98,7 @@ const ArticleEdit = (props: { article: IArticle }) => {
     </div>
   );
 };
+
+ArticleEdit.layout = false;
 
 export default ArticleEdit;

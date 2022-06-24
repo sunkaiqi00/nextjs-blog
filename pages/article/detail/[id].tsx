@@ -61,7 +61,7 @@ const ArticleDetail = (props: { article: IArticle }) => {
   } = article;
 
   return (
-    <div className={styles.articleDetail}>
+    <div className={`${styles.articleDetail} container`}>
       <h1 className={styles.articleTitle}>{title}</h1>
       <div className={styles.authInfoBlock}>
         <div className={styles.avatarLink}>
