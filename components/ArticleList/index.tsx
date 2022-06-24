@@ -1,5 +1,6 @@
 import { Avatar, Card } from 'antd';
 import Link from 'next/link';
+import Image from 'next/Image';
 import { formatDistanceToNow } from 'date-fns';
 import { EyeOutlined } from '@ant-design/icons';
 import { markdownToTxt } from 'markdown-to-txt';
@@ -21,7 +22,7 @@ const Articlelist = (props: IArticleList) => {
   };
 
   const handleViewArticle = (item: IArticle) => {
-    router.push(`/article/${item.id}`); ///detail
+    router.push(`/article/detail/${item.id}`); ///detail
   };
   return (
     <ul className={styles.articleContainer}>
@@ -68,21 +69,16 @@ const Articlelist = (props: IArticleList) => {
               </div>
 
               <div className={styles.articleCover}>
-                <img src="/images/article-img.webp" />
+                <Image
+                  src="/images/article-img.webp"
+                  alt="封面预览图"
+                  width="120px"
+                  height="80px"
+                />
               </div>
             </div>
           </li>
         );
-        // return (
-        // <Card key={item.id} title={renderTitle(item)}>
-        //   <h3>{item.title}</h3>
-        //   <p>{item.content}</p>
-        //   <div>
-        //     <EyeOutlined />
-        //     <span>{item.views}</span>
-        //   </div>
-        // </Card>
-        // );
       })}
     </ul>
   );

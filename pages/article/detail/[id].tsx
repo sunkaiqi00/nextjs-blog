@@ -1,6 +1,11 @@
 import { perpareConection } from 'db';
 import { Article } from 'db/entity';
+import Link from 'next/link';
 import { IArticle } from 'types';
+import MarkDown from 'markdown-to-jsx';
+import styles from './index.module.scss';
+import { format } from 'date-fns';
+import Image from 'next/image';
 
 interface Iprops {
   params: {
@@ -15,6 +20,7 @@ export async function getStaticPaths() {
   };
 }
 
+// 固定方法
 export async function getStaticProps(regs: Iprops) {
   const {
     params: { id }
@@ -27,6 +33,13 @@ export async function getStaticProps(regs: Iprops) {
     relations: ['user']
   });
 
+  // 文章阅读次数增加
+  if (article) {
+    const articleRepo = db.getRepository(Article);
+    article.views += 1;
+    articleRepo.save(article);
+  }
+
   console.log('article:', article);
 
   return {
@@ -36,8 +49,50 @@ export async function getStaticProps(regs: Iprops) {
   };
 }
 
-const ArticleDetail = () => {
-  return <h1>文章详情</h1>;
+const ArticleDetail = (props: { article: IArticle }) => {
+  const { article } = props;
+  if (!article) return <></>;
+  const {
+    title,
+    update_time,
+    views,
+    content,
+    user: { userId, avatar, nickname }
+  } = article;
+
+  return (
+    <div className={styles.articleDetail}>
+      <h1 className={styles.articleTitle}>{title}</h1>
+      <div className={styles.authInfoBlock}>
+        <div className={styles.avatarLink}>
+          <Link href={`/user/${userId}`}>
+            <Image
+              src={avatar}
+              className={styles.avatar}
+              width="55px"
+              height="55px"
+              alt="头像"
+            />
+          </Link>
+        </div>
+
+        <div className={styles.authorInfoBox}>
+          <div className={`${styles.authorName} ellipsis`}>{nickname}</div>
+          <div className={styles.metaBox}>
+            <time className={styles.time}>
+              {format(new Date(update_time), 'yyyy-MM-dd HH:SS')}
+            </time>
+            <span className={styles.viewsCount}>
+              &nbsp;·&nbsp;&nbsp;阅读 {views}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className={styles.articleContent}>
+        <MarkDown>{content || ''}</MarkDown>
+      </div>
+    </div>
+  );
 };
 
 export default ArticleDetail;

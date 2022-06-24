@@ -1,0 +1,68 @@
+.articleDetail {
+  background-color: #fff;
+  position: relative;
+  padding: 1.667rem 2.33rem;
+  margin-top: 1.8rem;
+  z-index: 1;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+  .articleTitle {
+    margin: 0 0 1.667rem;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.31;
+    color: #252933;
+  }
+
+  // .articleCover {
+  //   height: 450px;
+  //   position: relative;
+  //   -o-object-fit: cover;
+  //   object-fit: cover;
+  //   margin-bottom: 2rem;
+  // }
+
+  .authInfoBlock {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.2rem;
+
+    .avatarLink {
+      margin-right: 1rem;
+    }
+
+    .avatar {
+      border-radius: 50%;
+    }
+
+    .authorInfoBox {
+      display: flex;
+      flex-direction: column;
+
+      .authorName {
+        display: inline-block;
+        width: 100%;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #515767;
+        line-height: 2rem;
+      }
+
+      .metaBox {
+        font-size: 1rem;
+        color: #8a919f;
+        margin-top: 2px;
+        line-height: 22px;
+
+        .time {
+          letter-spacing: 1px;
+        }
+
+        .viewsCount {}
+      }
+    }
+  }
+
+  .articleContent {}
+}
