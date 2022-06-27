@@ -1,9 +1,9 @@
 export type IUserInfo = {
-  userId: number | string;
+  userId: number;
   nickname: string;
   avatar: string;
-  job: string;
-  introduce: string;
+  job?: string;
+  introduce?: string;
 };
 
 export interface IComment {

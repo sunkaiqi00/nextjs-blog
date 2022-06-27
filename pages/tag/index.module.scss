@@ -1,0 +1,32 @@
+.tagsWrapper {
+  background-color: #fff;
+  padding: 1.667rem 2.33rem;
+
+  .allTAgs {
+    display: flex;
+    gap: 20px;
+
+    .tagsItem {
+      width: 220px;
+      height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      justify-content: space-evenly;
+      border: 1px solid #f4f5f5;
+      box-shadow: 0 0 1px rgba(0, 0, 0, .2);
+
+      svg {
+        width: 56px;
+        height: 56px;
+
+      }
+
+      .tagTitle {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+}

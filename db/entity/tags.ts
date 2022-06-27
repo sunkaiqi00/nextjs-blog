@@ -2,10 +2,8 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
-  ManyToOne,
   PrimaryGeneratedColumn
 } from 'typeorm';
 import { Article } from './article';
@@ -40,13 +38,13 @@ export class Tag extends BaseEntity {
       name: 'user_id'
     }
   })
-  users?: User[];
+  users!: User[];
 
   @ManyToMany(() => Article, {
     cascade: true
   })
   @JoinTable({
-    name: 'tags_article_rel',
+    name: 'tags_articles_rel',
     joinColumn: {
       name: 'tag_id'
     },
@@ -54,5 +52,5 @@ export class Tag extends BaseEntity {
       name: 'article_id'
     }
   })
-  articles?: Article[];
+  articles!: Article[];
 }

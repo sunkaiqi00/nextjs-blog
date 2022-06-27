@@ -8,7 +8,7 @@ export interface IUserStore {
 const userStore = (): IUserStore => {
   return {
     userInfo: {
-      userId: '',
+      userId: -1,
       nickname: '',
       avatar: ''
     },
