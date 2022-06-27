@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { perpareConection } from 'db';
 import Link from 'next/link';
-import Image from 'next/image';
+import { observer } from 'mobx-react-lite';
 import { Article } from 'db/entity';
 import { IArticle, IComment } from 'types';
 import MarkDown from 'markdown-to-jsx';
@@ -222,4 +222,4 @@ const ArticleDetail = (props: { article: IArticle }) => {
   );
 };
 
-export default ArticleDetail;
+export default observer(ArticleDetail);

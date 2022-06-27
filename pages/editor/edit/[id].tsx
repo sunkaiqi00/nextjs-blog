@@ -2,6 +2,7 @@ import { Button, Input, message } from 'antd';
 import { perpareConection } from 'db';
 import { Article } from 'db/entity';
 import dynamic from 'next/dynamic';
+import { observer } from 'mobx-react-lite';
 import { Iprops } from 'pages/article/detail/[id]';
 import { ChangeEvent, useState } from 'react';
 import { IArticle } from 'types';
@@ -101,4 +102,4 @@ const ArticleEdit: LayoutNextPage = props => {
 
 ArticleEdit.layout = false;
 
-export default ArticleEdit;
+export default observer(ArticleEdit);

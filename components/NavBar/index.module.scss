@@ -1,21 +1,29 @@
-.logoArea{
+.navBar {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.logoArea {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
-.navArea{
+
+.navArea {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.btnArea{
+
+.btnArea {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.writeBtn{
+
+.writeBtn {
   margin-right: 12px;
 }

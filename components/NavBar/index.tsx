@@ -77,8 +77,8 @@ const NavBar = () => {
     );
   };
   return (
-    <>
-      <Row className={styles.navbar}>
+    <div className={styles.navBar}>
+      <Row>
         <Col span={5}>
           <div className={styles.logoArea}>
             <Logo />
@@ -118,7 +118,7 @@ const NavBar = () => {
         </Col>
       </Row>
       <Login visible={isShowLogin} onClose={closeloginModal} />
-    </>
+    </div>
   );
 };
 
