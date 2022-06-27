@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn
+} from 'typeorm';
+// import { Tag } from './tag';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -16,4 +23,9 @@ export class User extends BaseEntity {
 
   @Column()
   introduce!: string;
+
+  // @ManyToMany(() => Tag, tag => tag.users, {
+  //   cascade: true
+  // })
+  // tags!: Tag[];
 }

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { withIronSessionApiRoute } from 'iron-session/next';
 import { ironOption } from 'config';
 import { perpareConection } from 'db';
-import { Article, User } from 'db/entity';
+import { Article, User, Tag } from 'db/entity';
 import { ISession } from '../user/sendVerifyCode';
 
 export default withIronSessionApiRoute(publish, ironOption);
@@ -11,17 +11,27 @@ async function publish(req: NextApiRequest, res: NextApiResponse) {
   try {
     const session = req?.session as ISession;
 
-    const { title, content } = req?.body;
+    const { title, content, tagIds } = req?.body;
 
     const db = await perpareConection();
 
-    const userRepo = await db.getRepository(User);
-    const articlesRepo = await db.getRepository(Article);
+    const userRepo = db.getRepository(User);
+    const articlesRepo = db.getRepository(Article);
+    const tagRepo = db.getRepository(Tag);
 
     const user = await userRepo.findOne({
       where: { id: session.userId }
     });
 
+    const tags = await tagRepo.find({
+      where: tagIds?.map((tagId: number) => ({ id: tagId }))
+    });
+    // console.log('13123123123123123 tags: ', tags);
+
+    // res.status(200).json({
+    //   code: -1
+    // });
+    // return;
     const article = Article.create({
       title,
       content,
@@ -33,6 +43,14 @@ async function publish(req: NextApiRequest, res: NextApiResponse) {
 
     if (user) {
       article.user = user;
+    }
+
+    if (tags) {
+      let newTags = tags?.map(tag => {
+        tag.article_count += 1;
+        return tag;
+      });
+      article.tags = newTags;
     }
 
     const result = await articlesRepo.save(article);
