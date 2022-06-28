@@ -13,7 +13,6 @@ export type IApp = {
 } & AppProps;
 
 function MyApp({ Component, pageProps, initialValue }: IApp) {
-  const {} = Component;
   const renderLayout = () => {
     if (Component.layout === false) {
       return <Component {...pageProps} />;
@@ -32,12 +31,11 @@ function MyApp({ Component, pageProps, initialValue }: IApp) {
 
 MyApp.getInitialProps = async ({ ctx }: any) => {
   const { userId, nickname, avatar } = ctx?.req?.cookies || {};
-
   return {
     initialValue: {
       user: {
         userInfo: {
-          userId,
+          userId: Number(userId),
           nickname,
           avatar
         }

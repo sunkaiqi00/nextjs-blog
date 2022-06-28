@@ -28,15 +28,14 @@ const NavBar = () => {
 
   const [isShowLogin, setIsShowLogin] = useState(false);
   // 跳转导航
-  const switchNav = data => {
-    console.log(data);
+  const switchNav = (data: MenuInfo) => {
     let { key } = data;
     push(key);
   };
 
   // 写文章
   const openEditor = () => {
-    if (userId) {
+    if (typeof userId !== 'undefined' && userId > 0) {
       push('/editor/new');
     } else {
       message.warning('请先登录');
@@ -55,10 +54,14 @@ const NavBar = () => {
     }
   };
   const handleLogout = () => {
-    http.get('/api/user/logout').then(res => {
+    http.get('/api/user/logout').then((res: any) => {
       if (res.code === 0) {
         message.success(res.msg);
-        store.user.setUserInfo({});
+        store.user.setUserInfo({
+          userId: -1,
+          nickname: '',
+          avatar: ''
+        });
       }
     });
   };

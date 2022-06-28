@@ -1,3 +1,5 @@
+import { ITag } from 'pages/tag';
+
 export type IUserInfo = {
   userId: number;
   nickname: string;
@@ -24,4 +26,5 @@ export interface IArticle {
     id: number;
   };
   comments: IComment[];
+  tags: ITag[];
 }

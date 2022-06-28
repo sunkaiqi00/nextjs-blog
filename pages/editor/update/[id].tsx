@@ -1,10 +1,10 @@
-import { Button, Input, message } from 'antd';
+import { Button, Input, message, Select } from 'antd';
 import { perpareConection } from 'db';
 import { Article } from 'db/entity';
 import dynamic from 'next/dynamic';
 import { observer } from 'mobx-react-lite';
 import { Iprops } from 'pages/article/detail/[id]';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { IArticle } from 'types';
 import { useRouter } from 'next/router';
 import http from 'api/http';
@@ -13,12 +13,13 @@ import '@uiw/react-markdown-preview/markdown.css';
 import styles from '../index.module.scss';
 
 import { LayoutNextPage } from '../new';
+import { ITag } from 'pages/tag';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
 export async function getStaticPaths() {
   return {
-    paths: ['/editor/edit/id'],
+    paths: ['/editor/update/id'],
     fallback: true
   };
 }
@@ -35,10 +36,8 @@ export async function getStaticProps(regs: Iprops) {
 
   const article = await articleRepo.findOne({
     where: { id },
-    relations: ['user']
+    relations: ['user', 'tags']
   });
-
-  // console.log('article: ', article);
 
   return {
     props: {
@@ -49,12 +48,23 @@ export async function getStaticProps(regs: Iprops) {
 
 const ArticleEdit: LayoutNextPage = props => {
   const { article } = props as { article: IArticle };
-  // console.log('article: ', article);
+
   const router = useRouter();
-  // console.log(router);
 
   const [title, setTitle] = useState(article?.title || '');
   const [content, setContent] = useState(article?.content || '');
+  const [allTags, setAllTags] = useState<ITag[]>([]);
+  const [tagIds, setTagIds] = useState<number[]>(
+    article?.tags.map(tag => tag.id) || []
+  );
+
+  useEffect(() => {
+    http.get('/api/tag/get').then(result => {
+      const res = result as any;
+      if (res.code === -1) return message.error(res.msg);
+      setAllTags(res?.data?.allTags || []);
+    });
+  }, []);
 
   const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -67,9 +77,10 @@ const ArticleEdit: LayoutNextPage = props => {
       .post('/api/article/update', {
         title,
         content,
-        id: article.id
+        id: article.id,
+        tagIds
       })
-      .then(res => {
+      .then((res: any) => {
         // console.log(res);
         if (res.code === 0) {
           message.success(res.msg);
@@ -87,10 +98,35 @@ const ArticleEdit: LayoutNextPage = props => {
     }
   };
 
+  const handleSelectTag = (ids: number[]) => {
+    setTagIds(ids);
+  };
+
   return (
     <div className={styles.newEditor}>
       <div className={styles.editorHead}>
-        <Input value={title} onChange={changeTitle} />
+        <Input
+          value={title}
+          onChange={changeTitle}
+          placeholder="请输入标题"
+          style={{ flex: 3 }}
+        />
+        <Select
+          mode="multiple"
+          allowClear
+          placeholder="请选择标签"
+          style={{ flex: 1 }}
+          defaultValue={tagIds}
+          onChange={handleSelectTag}
+        >
+          {allTags?.map(tag => {
+            return (
+              <Select.Option key={tag.id} value={tag.id}>
+                {tag.title}
+              </Select.Option>
+            );
+          })}
+        </Select>
         <Button type="primary" onClick={updateArticle}>
           更新
         </Button>

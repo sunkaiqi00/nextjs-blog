@@ -144,7 +144,7 @@ const ArticleDetail = (props: { article: IArticle }) => {
                 &nbsp;&nbsp;·&nbsp;&nbsp;阅读 {views}
               </span>
               {loginUser.userId === u_id && (
-                <Link href={`/editor/edit/${article.id}`}>
+                <Link href={`/editor/update/${article.id}`}>
                   &nbsp;&nbsp;编辑
                 </Link>
               )}
