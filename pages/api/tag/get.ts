@@ -17,11 +17,17 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
 
     const followTags = await tagRepo.find({
       relations: ['users'],
-      where: (qb: any) => {
-        qb.where('user_id = :id', { id: Number(userId) });
+      where: {
+        users: {
+          id: userId
+        }
+        // tags_users_rel: { user_id: id }
       }
     });
-    console.log('followTags: ', followTags);
+    // (qb: any) => {
+    //   qb.where('user_id = :id', { id: Number(userId) });
+    // }
+    // console.log('followTags: ', followTags);
 
     const allTags = await tagRepo.find({
       relations: ['users']
