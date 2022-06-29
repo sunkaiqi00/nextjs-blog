@@ -3,19 +3,13 @@ import { perpareConection } from 'db';
 import Link from 'next/link';
 import { observer } from 'mobx-react-lite';
 import { Article } from 'db/entity';
-import { IArticle, IComment } from 'types';
+import { IArticle, IComment, IIdParams } from 'types';
 import MarkDown from 'markdown-to-jsx';
 import styles from './index.module.scss';
 import { format, formatDistanceToNow } from 'date-fns';
 import { useStore } from 'context/StoreContext';
 import { Avatar, Button, Input, message } from 'antd';
 import http from 'api/http';
-
-export interface Iprops {
-  params: {
-    id: number;
-  };
-}
 
 export async function getStaticPaths() {
   return {
@@ -25,7 +19,7 @@ export async function getStaticPaths() {
 }
 
 // 固定方法
-export async function getStaticProps(regs: Iprops) {
+export async function getStaticProps(regs: IIdParams) {
   const {
     params: { id }
   } = regs;

@@ -1,0 +1,88 @@
+.userInfoWrapper {
+  max-width: 1440px;
+  display: flex;
+  margin-top: 20px;
+
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+
+    .userInfo {
+      width: 100%;
+      display: flex;
+
+      .userAvatar {
+        flex: 0 0 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .userMsg {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+        justify-content: space-evenly;
+        padding: 1rem;
+
+        .userName {
+          font-size: 1.5rem;
+          font-weight: 500;
+        }
+
+        .userIntroduce,
+        .userJob {
+          color: #696969;
+
+          svg {
+            margin-right: 8px;
+          }
+        }
+      }
+
+      .updateInfoBtn {
+        display: flex;
+        align-items: center;
+
+      }
+    }
+  }
+
+  .right {
+    width: 300px;
+    height: 180px;
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+    overflow: hidden;
+
+    .headTitle {
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+
+    .articleAchievement {
+      >div {
+        display: flex;
+        align-items: flex-end;
+
+        &:nth-of-type(1) {
+          margin-bottom: 8px;
+        }
+      }
+
+      svg {
+        color: #40a9ff;
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+      }
+    }
+  }
+}

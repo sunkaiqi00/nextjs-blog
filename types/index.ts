@@ -28,3 +28,9 @@ export interface IArticle {
   comments: IComment[];
   tags: ITag[];
 }
+
+export interface IIdParams {
+  params: {
+    id: number;
+  };
+}
