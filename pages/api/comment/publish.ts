@@ -3,7 +3,6 @@ import { withIronSessionApiRoute } from 'iron-session/next';
 import { ironOption } from 'config';
 import { perpareConection } from 'db';
 import { Article, User, Comment } from 'db/entity';
-import { ISession } from '../user/sendVerifyCode';
 
 export default withIronSessionApiRoute(publish, ironOption);
 

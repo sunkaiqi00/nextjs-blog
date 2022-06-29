@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { withIronSessionApiRoute } from 'iron-session/next';
 import { Cookie } from 'next-cookie';
 import { ironOption } from 'config';
-import { ISession } from './sendVerifyCode';
+import { ISession } from 'types';
 import { setCookie } from 'utils';
 
 export default withIronSessionApiRoute(logout, ironOption);
@@ -12,7 +12,7 @@ async function logout(req: NextApiRequest, res: NextApiResponse) {
   await session.destroy();
 
   const cookies = Cookie.fromApiRoute(req, res);
-  setCookie(cookies, { userId: '', nickname: '', avatar: '' });
+  setCookie(cookies, { userId: -1, nickname: '', avatar: '' });
 
   res.status(200).json({
     code: 0,

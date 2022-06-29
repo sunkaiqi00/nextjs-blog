@@ -1,3 +1,4 @@
+import { IronSession } from 'iron-session';
 import { ITag } from 'pages/tag';
 
 export type IUserInfo = {
@@ -34,3 +35,10 @@ export interface IIdParams {
     id: number;
   };
 }
+
+export type ISession = IronSession & {
+  verifyCode: string;
+  userId: number;
+  nickname: string;
+  avatar: string;
+};

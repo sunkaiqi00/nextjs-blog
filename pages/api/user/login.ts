@@ -4,7 +4,7 @@ import { Cookie } from 'next-cookie';
 import { ironOption } from 'config';
 import { perpareConection } from 'db';
 import { User, UserAuth } from 'db/entity';
-import { ISession } from './sendVerifyCode';
+import { ISession } from 'types';
 import { setCookie } from 'utils';
 
 export default withIronSessionApiRoute(login, ironOption);

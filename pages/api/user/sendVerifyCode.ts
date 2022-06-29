@@ -5,16 +5,9 @@ import { encode } from 'js-base64';
 import { withIronSessionApiRoute } from 'iron-session/next';
 import http from 'api/http';
 import { ironOption } from 'config';
-import { IronSession } from 'iron-session';
+import { ISession } from 'types';
 
 export default withIronSessionApiRoute(sendVerifyCode, ironOption);
-
-export type ISession = IronSession & {
-  verifyCode: string;
-  userId: number;
-  nickname: string;
-  avatar: string;
-};
 
 async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
   const { to = '', templateId = 1 } = req.body;

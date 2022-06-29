@@ -8,6 +8,7 @@ import Articlelist from 'components/ArticleList';
 import { perpareConection } from 'db';
 import { Article, User } from 'db/entity';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { IArticle, IIdParams, IUserInfo } from 'types';
 
@@ -52,12 +53,16 @@ export async function getStaticProps(regs: IIdParams) {
 
 const UserInfo = (params: { user: IUserInfo; articles: IArticle[] }) => {
   const { user, articles } = params;
-
+  const { push } = useRouter();
   const views = useMemo(() => {
-    return articles.reduce((prev, cur) => {
+    return articles?.reduce((prev, cur) => {
       return (prev += cur.views);
     }, 0);
   }, [articles]);
+
+  const updateProfile = () => {
+    push('/user/profile');
+  };
 
   return (
     <div className={`${styles.userInfoWrapper} container`}>
@@ -78,7 +83,7 @@ const UserInfo = (params: { user: IUserInfo; articles: IArticle[] }) => {
             </div>
           </div>
           <div className={styles.updateInfoBtn}>
-            <Button>编辑个人资料</Button>
+            <Button onClick={updateProfile}>编辑个人资料</Button>
           </div>
         </div>
         <Divider />

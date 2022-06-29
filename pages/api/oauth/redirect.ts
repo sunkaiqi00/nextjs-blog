@@ -5,9 +5,9 @@ import { ironOption } from 'config';
 import { perpareConection } from 'db';
 import { User, UserAuth } from 'db/entity';
 import { setCookie } from 'utils';
-import { ISession } from '../user/sendVerifyCode';
 import { githubClientId, githubClientSecret } from 'config/oauth';
 import http from 'api/http';
+import { ISession } from 'types';
 
 export default withIronSessionApiRoute(redirect, ironOption);
 

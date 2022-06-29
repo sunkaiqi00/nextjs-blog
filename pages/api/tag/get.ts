@@ -3,7 +3,7 @@ import { withIronSessionApiRoute } from 'iron-session/next';
 import { ironOption } from 'config';
 import { perpareConection } from 'db';
 import { Tag } from 'db/entity';
-import { ISession } from '../user/sendVerifyCode';
+import { ISession } from 'types';
 
 export default withIronSessionApiRoute(get, ironOption);
 
@@ -21,18 +21,15 @@ async function get(req: NextApiRequest, res: NextApiResponse) {
         users: {
           id: userId
         }
-        // tags_users_rel: { user_id: id }
       }
     });
-    // (qb: any) => {
-    //   qb.where('user_id = :id', { id: Number(userId) });
-    // }
-    // console.log('followTags: ', followTags);
+
+    console.log('followTags: ', followTags);
 
     const allTags = await tagRepo.find({
       relations: ['users']
     });
-    // console.log('allTags: ', allTags);
+    console.log('allTags: ', allTags);
     res.status(200).json({
       code: 0,
       msg: 'tags标签获取成功',
