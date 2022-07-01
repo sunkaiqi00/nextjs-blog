@@ -9,16 +9,16 @@ import { useRouter } from 'next/router';
 import http from 'api/http';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
-import styles from '../index.module.scss';
+import styles from './index.module.scss';
 
-import { LayoutNextPage } from '../new';
+import { LayoutNextPage } from './new';
 import { ITag } from 'pages/tag';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
 export async function getStaticPaths() {
   return {
-    paths: ['/editor/update/id'],
+    paths: ['/editor/id'],
     fallback: true
   };
 }
@@ -83,7 +83,7 @@ const ArticleEdit: LayoutNextPage = props => {
         // console.log(res);
         if (res.code === 0) {
           message.success(res.msg);
-          router.push(`/article/detail/${article.id}`);
+          router.push(`/article/${article.id}`);
         } else {
           message.error(res.msg);
         }

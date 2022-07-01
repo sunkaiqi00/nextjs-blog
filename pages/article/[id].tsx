@@ -13,7 +13,7 @@ import http from 'api/http';
 
 export async function getStaticPaths() {
   return {
-    paths: ['/article/detail/id'],
+    paths: ['/article/id'],
     fallback: true
   };
 }
@@ -56,20 +56,19 @@ const ArticleDetail = (props: { article: IArticle }) => {
   const loginUser = store.user.userInfo;
 
   const [commentText, setCommentText] = useState('');
+  const [commentsList, setComments] = useState(article?.comments || []);
 
-  // if (!article) return <></>;
-  const {
-    title,
-    update_time,
-    views,
-    content,
-    id,
-    comments,
-    // 文章所属用户
-    user: { id: u_id, avatar, nickname }
-  } = article || { user: {} };
-
-  const [commentsList, setComments] = useState(comments || []);
+  if (!article) return <></>;
+  // const {
+  //   title,
+  //   update_time,
+  //   views,
+  //   content,
+  //   id,
+  //   comments,
+  //   // 文章所属用户
+  //   user: { id: u_id, avatar, nickname }
+  // } = article || { user: {} };
 
   const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
@@ -81,7 +80,7 @@ const ArticleDetail = (props: { article: IArticle }) => {
       .post('/api/comment/publish', {
         content: commentText,
         userId: loginUser.userId,
-        articleId: id
+        articleId: article.id
       })
       .then(result => {
         const res = result as any;
@@ -109,44 +108,38 @@ const ArticleDetail = (props: { article: IArticle }) => {
   return (
     <div className="container">
       <div className={styles.articleDetail}>
-        <h1 className={styles.articleTitle}>{title}</h1>
+        <h1 className={styles.articleTitle}>{article?.title}</h1>
         <div className={styles.authInfoBlock}>
           <div className={styles.avatarLink}>
-            <Link href={`/user/${u_id}`}>
-              <Avatar src={avatar || '/images/avatar-def.svg'} size={55} />
-              {/* <Image
-                src={avatar}
-                className={styles.avatar}
-                width="55px"
-                height="55px"
-                alt="头像"
-              /> */}
+            <Link href={`/user/${article?.user?.id}`}>
+              <Avatar
+                src={article?.user.avatar || '/images/avatar-def.svg'}
+                size={55}
+              />
             </Link>
           </div>
 
           <div className={styles.authorInfoBox}>
-            <Link href={`/user/${u_id}`}>
+            <Link href={`/user/${article?.user?.id}`}>
               <div className={`${styles.authorName} ellipsis hover-pointer`}>
-                {nickname}
+                {article?.user?.nickname}
               </div>
             </Link>
             <div className={styles.metaBox}>
               <time className={styles.time}>
-                {format(new Date(update_time), 'yyyy-MM-dd HH:SS')}
+                {format(new Date(article?.update_time), 'yyyy-MM-dd HH:SS')}
               </time>
               <span className={styles.viewsCount}>
-                &nbsp;&nbsp;·&nbsp;&nbsp;阅读 {views}
+                &nbsp;&nbsp;·&nbsp;&nbsp;阅读 {article?.views}
               </span>
-              {loginUser.userId === u_id && (
-                <Link href={`/editor/update/${article.id}`}>
-                  &nbsp;&nbsp;编辑
-                </Link>
+              {loginUser.userId === article?.user?.id && (
+                <Link href={`/editor/${article.id}`}>&nbsp;&nbsp;编辑</Link>
               )}
             </div>
           </div>
         </div>
         <div className={styles.articleContent}>
-          <MarkDown>{content || ''}</MarkDown>
+          <MarkDown>{article?.content || ''}</MarkDown>
         </div>
       </div>
       <div className={styles.commentContainer}>

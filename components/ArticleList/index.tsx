@@ -20,7 +20,7 @@ const Articlelist = (props: IArticleList) => {
   };
 
   const handleViewArticle = (item: IArticle) => {
-    router.push(`/article/detail/${item.id}`); ///detail
+    router.push(`/article/${item.id}`); ///detail
   };
   return (
     <ul className={styles.articleContainer}>

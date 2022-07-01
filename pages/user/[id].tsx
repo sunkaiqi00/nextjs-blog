@@ -20,22 +20,18 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(regs: IIdParams) {
-  const {
-    params: { id }
-  } = regs;
-
+export async function getStaticProps({ params }: IIdParams) {
   const db = await perpareConection();
   const userRepo = db.getRepository(User);
   const articleRepo = db.getRepository(Article);
   const user = await userRepo.findOne({
-    where: { id: Number(id) }
+    where: { id: Number(params?.id) }
   });
 
   const articles = await articleRepo.find({
     where: {
       user: {
-        id: Number(id)
+        id: Number(params?.id)
       }
     },
     relations: ['user', 'tags']
@@ -68,17 +64,17 @@ const UserInfo = (params: { user: IUserInfo; articles: IArticle[] }) => {
       <div className={styles.left}>
         <div className={styles.userInfo}>
           <div className={styles.userAvatar}>
-            <Avatar src={user.avatar} size={100} alt="头像" />
+            <Avatar src={user?.avatar} size={100} alt="头像" />
           </div>
           <div className={styles.userMsg}>
-            <div className={styles.userName}>{user.nickname}</div>
+            <div className={styles.userName}>{user?.nickname}</div>
             <div className={styles.userJob}>
               <CodeOutlined />
-              {user.job}
+              {user?.job}
             </div>
             <div className={styles.userIntroduce}>
               <WalletOutlined />
-              {user.introduce}
+              {user?.introduce}
             </div>
           </div>
           <div className={styles.updateInfoBtn}>
@@ -95,7 +91,7 @@ const UserInfo = (params: { user: IUserInfo; articles: IArticle[] }) => {
         <div className={styles.articleAchievement}>
           <div>
             <FundViewOutlined />
-            共创作{articles.length}篇文章
+            共创作{articles?.length}篇文章
           </div>
           <div>
             <FundViewOutlined />
