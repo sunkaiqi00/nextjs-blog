@@ -30,5 +30,5 @@ export class Comment extends BaseEntity {
   // 多对一
   @ManyToOne(() => Article)
   @JoinColumn({ name: 'article_id' })
-  article?: User;
+  article?: Article;
 }

@@ -23,10 +23,14 @@ async function publish(req: NextApiRequest, res: NextApiResponse) {
       where: { id: session.userId }
     });
 
-    const tags = await tagRepo.find({
-      where: tagIds?.map((tagId: number) => ({ id: tagId }))
-    });
-    // console.log('13123123123123123 tags: ', tags);
+    let tags: Tag[] = [];
+    if (tagIds && tagIds.length) {
+      tags = await tagRepo.find({
+        where: tagIds?.map((tagId: number) => ({ id: tagId }))
+      });
+    }
+
+    console.log('1312312 tags: ', tags);
 
     // res.status(200).json({
     //   code: -1
@@ -45,7 +49,7 @@ async function publish(req: NextApiRequest, res: NextApiResponse) {
       article.user = user;
     }
 
-    if (tags) {
+    if (tags && tags.length) {
       let newTags = tags?.map(tag => {
         tag.article_count += 1;
         return tag;

@@ -8,10 +8,12 @@ export default withIronSessionApiRoute(publish, ironOption);
 
 async function publish(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { content, userId, articleId } = req.body;
+    const { content = '', userId, articleId } = req.body;
     const db = await perpareConection();
-    const commentRepo = await db.getRepository(Comment);
-    const user = await db.getRepository(User).findOne({
+    const commentRepo = db.getRepository(Comment);
+    const userRepo = db.getRepository(User);
+
+    const user = await userRepo.findOne({
       where: { id: userId }
     });
 
@@ -21,13 +23,20 @@ async function publish(req: NextApiRequest, res: NextApiResponse) {
 
     // console.log(content, userId, articleId);
 
-    const comment = Comment.create({
-      content,
-      create_time: new Date(),
-      update_time: new Date(),
-      user,
-      article
-    });
+    const comment = new Comment();
+    comment.content = content;
+    comment.create_time = new Date();
+    comment.update_time = new Date();
+    comment.user = user || undefined;
+    comment.article = article || undefined;
+    // .create({
+    //   content,
+    //   create_time: new Date(),
+    //   update_time: new Date(),
+    //   user,
+    //   article
+    // });
+    console.log('comment: ', comment);
 
     const resComment = await commentRepo.save(comment);
     // console.log(resComment);
