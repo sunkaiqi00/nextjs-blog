@@ -3,9 +3,8 @@ import { perpareConection } from 'db';
 import { Article } from 'db/entity';
 import dynamic from 'next/dynamic';
 import { observer } from 'mobx-react-lite';
-import { Iprops } from 'pages/article/detail/[id]';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { IArticle } from 'types';
+import { IArticle, IIdParams } from 'types';
 import { useRouter } from 'next/router';
 import http from 'api/http';
 import '@uiw/react-md-editor/markdown-editor.css';
@@ -24,7 +23,7 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(regs: Iprops) {
+export async function getStaticProps(regs: IIdParams) {
   // console.log('regs: ', regs);
   const {
     params: { id }
