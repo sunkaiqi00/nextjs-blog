@@ -1,6 +1,4 @@
-import { Avatar, Card } from 'antd';
-import Link from 'next/link';
-import Image from 'next/Image';
+import { Image } from 'antd';
 import { formatDistanceToNow } from 'date-fns';
 import { EyeOutlined } from '@ant-design/icons';
 import { markdownToTxt } from 'markdown-to-txt';
@@ -72,8 +70,9 @@ const Articlelist = (props: IArticleList) => {
                 <Image
                   src="/images/article-img.webp"
                   alt="封面预览图"
-                  width="120px"
-                  height="80px"
+                  width={120}
+                  height={80}
+                  preview={false}
                 />
               </div>
             </div>

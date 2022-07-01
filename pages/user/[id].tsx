@@ -7,7 +7,6 @@ import { Avatar, Button, Divider } from 'antd';
 import Articlelist from 'components/ArticleList';
 import { perpareConection } from 'db';
 import { Article, User } from 'db/entity';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { IArticle, IIdParams, IUserInfo } from 'types';
