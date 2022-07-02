@@ -24,14 +24,20 @@ export async function getStaticProps({ params }: IIdParams) {
   const db = await perpareConection();
   const userRepo = db.getRepository(User);
   const articleRepo = db.getRepository(Article);
+
+  let uid = 3
+  // params?.id ? Number(params.id) : -1;
+
+  console.log('uid: ', uid,);
+
   const user = await userRepo.findOne({
-    where: { id: Number(params?.id) }
+    where: { id: uid }
   });
 
   const articles = await articleRepo.find({
     where: {
       user: {
-        id: Number(params?.id)
+        id: uid
       }
     },
     relations: ['user', 'tags']
