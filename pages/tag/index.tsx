@@ -7,6 +7,7 @@ import { Button, message, Tabs } from 'antd';
 import * as ANTDICONS from '@ant-design/icons';
 
 import styles from './index.module.scss';
+import { observer } from 'mobx-react-lite';
 
 export interface ITag {
   id: number;
@@ -135,4 +136,4 @@ const Tag = () => {
   );
 };
 
-export default Tag;
+export default observer(Tag);

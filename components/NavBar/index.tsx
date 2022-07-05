@@ -19,6 +19,7 @@ import { useStore } from 'context/StoreContext';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import http from 'api/http';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const NavBar = () => {
   const store = useStore();
@@ -56,6 +57,7 @@ const NavBar = () => {
   const handleLogout = () => {
     http.get('/api/user/logout').then((res: any) => {
       if (res.code === 0) {
+        push('/');
         message.success(res.msg);
         store.user.setUserInfo({
           userId: -1,
@@ -65,6 +67,11 @@ const NavBar = () => {
       }
     });
   };
+
+  const goHome = () => {
+    push('/');
+  };
+
   const renderDropDownMenu = () => {
     return (
       <Menu onClick={data => dropDownClick(data)}>
@@ -84,7 +91,9 @@ const NavBar = () => {
       <Row>
         <Col span={5}>
           <div className={styles.logoArea}>
-            <Logo />
+            <Button type="link" onClick={goHome}>
+              <Logo />
+            </Button>
           </div>
         </Col>
         <Col span={14}>
@@ -105,7 +114,7 @@ const NavBar = () => {
             >
               写文章
             </Button>
-            {userId ? (
+            {userId >= 0 ? (
               <Dropdown overlay={renderDropDownMenu()}>
                 {/* <div> */}
                 <Avatar src={avatar} size={42} />

@@ -1,6 +1,10 @@
 .layoutContainer {
 
-  background-color: #f4f5f5;
+  // background-color: #f4f5f5;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   .layoutHeader {
     background-color: #fff;

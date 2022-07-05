@@ -1,4 +1,4 @@
-import { Button, message } from 'antd';
+import { Button, Divider, message } from 'antd';
 import http from 'api/http';
 import Articlelist from 'components/ArticleList';
 import { perpareConection } from 'db';
@@ -7,6 +7,7 @@ import type { NextPage } from 'next';
 import { createRef, useEffect, useState } from 'react';
 import { IArticle } from 'types';
 import { ITag } from './tag';
+import styles from 'styles/index.module.scss';
 
 type IHomePeops = {
   articles: IArticle[];
@@ -54,7 +55,7 @@ const Home: NextPage<IHomePeops> = props => {
   return (
     <div className="container">
       {/* className={styles.filterTagsWrapper} */}
-      <div>
+      <div className={styles.homeTagWrapper}>
         {allTags?.map(tag => {
           return (
             <Button key={tag.id} onClick={() => handleFilter(tag)}>
@@ -64,6 +65,7 @@ const Home: NextPage<IHomePeops> = props => {
         })}
         {/* <Button onClick={handleUnFilter}>清楚</Button> */}
       </div>
+      <Divider />
       <Articlelist articles={articles} />
     </div>
   );

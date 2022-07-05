@@ -4,6 +4,7 @@ import {
   WalletOutlined
 } from '@ant-design/icons';
 import { Avatar, Button, Divider } from 'antd';
+import { observer } from 'mobx-react-lite';
 import Articlelist from 'components/ArticleList';
 import { perpareConection } from 'db';
 import { Article, User } from 'db/entity';
@@ -25,10 +26,10 @@ export async function getStaticProps({ params }: IIdParams) {
   const userRepo = db.getRepository(User);
   const articleRepo = db.getRepository(Article);
 
-  let uid = 3
+  let uid = 3;
   // params?.id ? Number(params.id) : -1;
 
-  console.log('uid: ', uid,);
+  console.log('uid: ', uid);
 
   const user = await userRepo.findOne({
     where: { id: uid }
@@ -109,4 +110,4 @@ const UserInfo = (params: { user: IUserInfo; articles: IArticle[] }) => {
   );
 };
 
-export default UserInfo;
+export default observer(UserInfo);

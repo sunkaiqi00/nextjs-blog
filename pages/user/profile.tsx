@@ -1,5 +1,6 @@
 import { Button, Divider, Form, Input, message } from 'antd';
 import http from 'api/http';
+import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 
 import styles from './index.module.scss';
@@ -63,4 +64,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default observer(UserProfile);
